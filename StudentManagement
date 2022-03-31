@@ -1,0 +1,84 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class StudentManagement {
+  public ArrayList<Student> studentList = new ArrayList<Student>();
+
+  public void nhapDuLieu() {
+
+    int check = 1;
+    do {
+      Scanner sc = new Scanner(System.in);
+      String name;
+      System.out.print("Nhap Ho Ten : ");
+      name = sc.nextLine();
+      char gender;
+      System.out.print("Nhao Gioi Tinh (1-Nam, 0-Nu) : ");
+      int i = sc.nextInt();
+      gender = i == 1 ? '1' : '0';
+      int birth_year;
+      System.out.print("Nhap Nam Sinh : ");
+      birth_year = sc.nextInt();
+      String studentID;
+      System.out.print("Nhap StudentID = ");
+      studentID = sc.next();
+      int academic_year;
+      System.out.print("Nhap Nam Hoc : ");
+      academic_year = sc.nextInt();
+      Student sv = new Student(name, gender, birth_year, studentID, academic_year);
+      studentList.add(sv);
+      System.out.print("Nhap (1-tiep tuc, 0-dung lai) : ");
+      check = sc.nextInt();
+    } while (check == 1);
+  }
+
+  public void xuatStudentList() {
+    for (Student sv : studentList) {
+      System.out.println(sv.toString());
+    }
+  }
+
+  public ArrayList<Student> searchBirthYear(int birth_year_search) {
+    ArrayList<Student> kq = new ArrayList<Student>();
+    for (Student sv : studentList) {
+      if (birth_year_search == sv.getBirth_year()) {
+        kq.add(sv);
+      }
+    }
+    return kq;
+  }
+
+  public ArrayList<Student> searchName(String name_search) {
+    ArrayList<Student> kq = new ArrayList<Student>();
+    for (Student sv : studentList) {
+      if (name_search.equals(sv.getName())) {
+        kq.add(sv);
+      }
+    }
+    return kq;
+  }
+  
+  public static void main(String[] args) {
+    StudentManagement sm = new StudentManagement();
+    sm.nhapDuLieu();
+    sm.xuatStudentList();
+    int birth_year_search;
+    Scanner sc = new Scanner(System.in);
+    System.out.print("Nhap Nam Sinh Can Tim Kiem : ");
+    birth_year_search = Integer.parseInt(sc.nextLine());
+    ArrayList<Student> listBirth_Year = sm.searchBirthYear(birth_year_search);
+    System.out.println("Danh Sach Sinh Vien Co Nam Sinh <" + birth_year_search + "> la : ");
+    for (Student sv : listBirth_Year) {
+      System.out.println(sv.toString());
+    }
+    String name_search;
+    System.out.print("Nhap Ho Ten Can Tim Kiem : ");
+    name_search = sc.nextLine();
+    ArrayList<Student> listName = sm.searchName(name_search);
+    System.out.println("Danh Sach Sinh Vien Co Ho Ten <" + name_search + "> la : ");
+    for (Student sv : listName) {
+      System.out.println(sv.toString());
+    }
+  }
+
+}
